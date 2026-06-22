@@ -36,7 +36,7 @@ Primary flow:
 
 ### Tool calling
 
-- `ChatClient` registers use-case tools.
+- `ChatClient` registers use-case tools (`persist-transaction`, `list-transactions-by-category`, `get-total-revenue`).
 - `@Tool` methods expose business capabilities to the model.
 
 ### Text-to-speech
