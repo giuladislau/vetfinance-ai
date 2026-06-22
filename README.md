@@ -1,8 +1,8 @@
-# DIO Spring Boot - Final Project 05: Spring AI (budgeting)
+# DIO Spring Boot - Final Project 05: Spring AI (VetFinance AI)
 
 ## Introduction
 
-This final module applies Spring AI in a budgeting API while preserving the same layered architecture used across the track.
+This final module applies Spring AI in a financial management API for veterinary clinics while preserving the same layered architecture used across the track.
 
 The goal is to integrate AI capabilities without bypassing domain and use case boundaries.
 
