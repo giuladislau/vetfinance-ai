@@ -3,6 +3,8 @@ package dio.budgeting.infrastructure.http;
 import dio.budgeting.application.GetTotalRevenueUseCase;
 import dio.budgeting.application.ListTransactionsByCategoryUseCase;
 import dio.budgeting.application.PersistTransactionUseCase;
+import dio.budgeting.application.RegisterInteractionUseCase;
+import dio.budgeting.application.input.RegisterInteractionInput;
 import dio.budgeting.domain.Category;
 import dio.budgeting.infrastructure.http.request.TransactionRequest;
 import dio.budgeting.infrastructure.http.response.TransactionResponse;
@@ -26,6 +28,7 @@ public class TransactionController {
     private final PersistTransactionUseCase persistTransactionUseCase;
     private final ListTransactionsByCategoryUseCase listTransactionsByCategoryUseCase;
     private final GetTotalRevenueUseCase getTotalRevenueUseCase;
+    private final RegisterInteractionUseCase registerInteractionUseCase;
 
     private final TranscriptionModel transcriptionModel;
     private final ChatClient chatClient;
@@ -34,6 +37,7 @@ public class TransactionController {
     public TransactionController(PersistTransactionUseCase persistTransactionUseCase,
                                  ListTransactionsByCategoryUseCase listTransactionsByCategoryUseCase,
                                  GetTotalRevenueUseCase getTotalRevenueUseCase,
+                                 RegisterInteractionUseCase registerInteractionUseCase,
                                  TranscriptionModel transcriptionModel,
                                  @Value("classpath:prompts/system-message.st") Resource systemPrompt,
                                  ChatClient.Builder chatClientBuilder,
@@ -41,6 +45,7 @@ public class TransactionController {
         this.persistTransactionUseCase = persistTransactionUseCase;
         this.listTransactionsByCategoryUseCase = listTransactionsByCategoryUseCase;
         this.getTotalRevenueUseCase = getTotalRevenueUseCase;
+        this.registerInteractionUseCase = registerInteractionUseCase;
         this.transcriptionModel = transcriptionModel;
         this.chatClient = chatClientBuilder
                 .defaultSystem(systemPrompt.getContentAsString(Charset.defaultCharset()))
@@ -65,6 +70,8 @@ public class TransactionController {
     ResponseEntity<Resource> transcribe(@RequestParam("file") MultipartFile file) {
         var userMessage = transcriptionModel.transcribe(file.getResource());
         var result = chatClient.prompt().user(userMessage).call().content();
+
+        registerInteractionUseCase.execute(new RegisterInteractionInput(userMessage, result));
 
         byte[] audio = textToSpeechModel.call(result);
         var resource = new ByteArrayResource(audio);
