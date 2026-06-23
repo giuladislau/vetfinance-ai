@@ -1,6 +1,8 @@
 package dio.budgeting.infrastructure.http;
 
 import dio.budgeting.application.GetTotalRevenueUseCase;
+import dio.budgeting.application.GetRevenueByCategoryUseCase;
+import dio.budgeting.application.GetTopCategoryUseCase;
 import dio.budgeting.application.ListTransactionsByCategoryUseCase;
 import dio.budgeting.application.PersistTransactionUseCase;
 import dio.budgeting.application.RegisterInteractionUseCase;
@@ -29,6 +31,8 @@ public class TransactionController {
     private final ListTransactionsByCategoryUseCase listTransactionsByCategoryUseCase;
     private final GetTotalRevenueUseCase getTotalRevenueUseCase;
     private final RegisterInteractionUseCase registerInteractionUseCase;
+    private final GetRevenueByCategoryUseCase getRevenueByCategoryUseCase;
+    private final GetTopCategoryUseCase getTopCategoryUseCase;
 
     private final TranscriptionModel transcriptionModel;
     private final ChatClient chatClient;
@@ -38,6 +42,8 @@ public class TransactionController {
                                  ListTransactionsByCategoryUseCase listTransactionsByCategoryUseCase,
                                  GetTotalRevenueUseCase getTotalRevenueUseCase,
                                  RegisterInteractionUseCase registerInteractionUseCase,
+                                 GetRevenueByCategoryUseCase getRevenueByCategoryUseCase,
+                                 GetTopCategoryUseCase getTopCategoryUseCase,
                                  TranscriptionModel transcriptionModel,
                                  @Value("classpath:prompts/system-message.st") Resource systemPrompt,
                                  ChatClient.Builder chatClientBuilder,
@@ -46,10 +52,12 @@ public class TransactionController {
         this.listTransactionsByCategoryUseCase = listTransactionsByCategoryUseCase;
         this.getTotalRevenueUseCase = getTotalRevenueUseCase;
         this.registerInteractionUseCase = registerInteractionUseCase;
+        this.getRevenueByCategoryUseCase = getRevenueByCategoryUseCase;
+        this.getTopCategoryUseCase = getTopCategoryUseCase;
         this.transcriptionModel = transcriptionModel;
         this.chatClient = chatClientBuilder
                 .defaultSystem(systemPrompt.getContentAsString(Charset.defaultCharset()))
-                .defaultTools(persistTransactionUseCase, listTransactionsByCategoryUseCase, getTotalRevenueUseCase)
+                .defaultTools(persistTransactionUseCase, listTransactionsByCategoryUseCase, getTotalRevenueUseCase, getRevenueByCategoryUseCase, getTopCategoryUseCase)
                 .build();
         this.textToSpeechModel = textToSpeechModel;
     }
