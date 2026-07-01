@@ -105,7 +105,7 @@ Você também pode gerenciar o sistema manualmente usando ferramentas como Postm
 * **Criar Transação**: `POST /transactions` (Payload JSON)
 * **Listar por Categoria**: `GET /transactions/{category}`
 * **Ver Dashboard**: `GET /dashboard`
-* **Consultar Auditorias**: `GET /interactions`
+* **Consultar Auditorias**: `GET /audits`
 
 ---
 
