@@ -55,6 +55,7 @@ O projeto foi construído inspirado em **Domain-Driven Design (DDD)** e **Clean 
 ## Como Executar
 
 **1. Clonar repositório:**
+
 ```bash
 git clone https://github.com/seu-usuario/vetfinance-ai.git
 cd vetfinance-ai
@@ -62,6 +63,7 @@ cd vetfinance-ai
 
 **2. Configurar OPENAI_API_KEY:**
 Defina sua chave da OpenAI como uma variável de ambiente no seu terminal:
+
 ```bash
 export OPENAI_API_KEY="sk-SuaChaveAqui"
 ```
@@ -70,6 +72,7 @@ export OPENAI_API_KEY="sk-SuaChaveAqui"
 O projeto utiliza a dependência `spring-boot-docker-compose`, que irá iniciar e configurar automaticamente um container MySQL a partir do arquivo docker-compose (caso exista) na inicialização da aplicação. Basta ter o Docker instalado e rodando na sua máquina.
 
 **4. Executar aplicação:**
+
 ```bash
 ./gradlew bootRun
 ```
@@ -88,6 +91,7 @@ O fluxo de negócio mais avançado do projeto é a **interação com a Inteligê
 6. **Geração de Áudio**: A resposta ("A consulta de R$ 150 foi registrada com sucesso") é convertida em um arquivo mp3 de áudio pelo Text-to-Speech e retornado na chamada HTTP.
 
 **Exemplo de requisição (cURL):**
+
 ```bash
 curl -X POST http://localhost:8080/transactions/ai \
   -F "file=@/caminho/para/seu/audio.m4a" \
